@@ -1,55 +1,35 @@
 --Here we are creating a table to store the information about the books-----
 
-CREATE TABLE book_info (
-BookID INT PRIMARY KEY NOT NULL,
-Book_Title VARCHAR(100) NOT NULL,
-PublisherName VARCHAR(100) NOT NULL
+CREATE TABLE IF NOT EXISTS book_infor (
+	bookid INT PRIMARY KEY NOT NULL,
+	book_title VARCHAR(100) NOT NULL,
+	author_name VARCHAR(50) NOT NULL,
+	category varchar(80) NOT NULL,
+	price INT NOT NULL,
+	copies INT NOT NULL
 );
+
+--Here we are inserting values to the table book_infor-----
+
+INSERT INTO book_infor (bookid, book_title, author_name, category, price, copies)
+VALUES
+  ('46567', 'X-Men: God Loves, Man Kills', 'Chris', 'Comics', 95, 70),
+  ('73563', 'Mike Tyson : Undisputed Truth', 'Larry Sloman, Mike Tyson', 'Sports', 700, 80),
+  ('86354', 'V for Vendetta', 'Alan Moore', 'Comics', 800, 40),
+  ('28476', 'When Breath Becomes Air', 'Paul Kalanithi', 'Medical', 650, 88),
+  ('99764', 'The Great Gatsby', 'F. Scott Fitzgerald', 'Fiction', 888, 150);
+
 
 --Here we are creating a table to store the information about the authors-----
 
-CREATE TABLE authors (
-AuthorID INT PRIMARY KEY NOT NULL,	
-BookID INT NOT NULL,
-AuthorName VARCHAR(50) NOT NULL,
-CONSTRAINT fk_Bookid
-    FOREIGN KEY(BookID) 
-        REFERENCES book_info(BookID)
-);
-
---Here we are creating a table to store the information about the copies of books stored-----
-
-CREATE TABLE book_copies (
-	CopiesID INT PRIMARY KEY NOT NULL, 
+CREATE TABLE IF NOT EXISTS authors (
+	AuthorID INT PRIMARY KEY NOT NULL,	
 	BookID INT NOT NULL,
-	BranchID INT NOT NULL,
-	no_of_copies INT NOT NULL,
+	AuthorName VARCHAR(50) NOT NULL,
 		CONSTRAINT fk_Bookid
     		FOREIGN KEY(BookID) 
         		REFERENCES book_info(BookID)
 );
-
---Here we are creating a table to store the information about the due date for the books issued-----
-
-CREATE TABLE book_issue (
-	issue_id INT NOT NULL,
-	member_id varchar(20) NOT NULL,
-	BookID INT NOT NULL,
-	due_date date NOT NULL,
-	last_reminded date DEFAULT NULL
-) ;
-
---Here we are inserting values to the table book_info-----
-
-INSERT INTO book_info (BookID, Book_Title, PublisherName) VALUES
-
-(4162768, 'Harry Potter', 'Bloomsbury'), 
-
-(6743930, 'Rich Dad Poor Dad', 'Plata Publishing, LLC.'),
-
-(653637, 'King: A Life' , 'Farrar, Straus and Giroux')
-
-;
 
 --Here we are inserting values to the table authors-----
 
@@ -63,6 +43,18 @@ INSERT INTO authors (AuthorID, BookID, AuthorName) VALUES
 
 ;
 
+--Here we are creating a table to store the information about the copies of books stored-----
+
+CREATE TABLE IF NOT EXISTS book_copies (
+	CopiesID INT PRIMARY KEY NOT NULL, 
+	BookID INT NOT NULL,
+	BranchID INT NOT NULL,
+	no_of_copies INT NOT NULL,
+		CONSTRAINT fk_Bookid
+    		FOREIGN KEY(BookID) 
+        		REFERENCES book_info(BookID)
+);
+
 --Here we are inserting values to the table book_copies-----
 
 INSERT INTO book_copies (CopiesID, BookID, BranchID, no_of_copies) VALUES
@@ -75,6 +67,16 @@ INSERT INTO book_copies (CopiesID, BookID, BranchID, no_of_copies) VALUES
 
 ;
 
+--Here we are creating a table to store the information about the due date for the books issued-----
+
+CREATE TABLE IF NOT EXISTS book_issue (
+	issue_id INT NOT NULL,
+	member_id varchar(20) NOT NULL,
+	BookID INT NOT NULL,
+	due_date date NOT NULL,
+	last_reminded date DEFAULT NULL
+) ;
+
 --Here we are inserting values to the table book_issue-----
 
 INSERT INTO book_issue (issue_id, member_id, BookID, due_date, last_reminded) VALUES
@@ -86,6 +88,12 @@ INSERT INTO book_issue (issue_id, member_id, BookID, due_date, last_reminded) VA
 (1003, 876,  653637, '2024-03-22', '2024-01-17' )
 
 ;
+
+
+
+
+
+
 
 
 
